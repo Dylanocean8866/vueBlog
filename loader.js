@@ -5,6 +5,7 @@ var controllerSet = [];
 var pathMap = new Map();
 
 var files= fs.readdirSync(gc.web_page);
+
 for(var i = 0; i < files.length; i++){
     var temp = require('./'+ gc.web_page +"/"+ files[i]);
     if(temp.path){

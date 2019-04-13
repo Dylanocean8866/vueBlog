@@ -23,6 +23,24 @@
               var content = $('#editor').html();
               var title = $('#title').val();
               var tags = $('#tags').val();
+              $.ajax({
+                url:"/edit_article",
+                method:"post",
+                data:{
+                  content,
+                  title,
+                  tags
+                },
+                success:function(resp){
+                  alert(JSON.parse(resp).msg)
+                  var content = $('#editor').html("").trim();
+                  var content = $('#title').val("").trim();
+                  var content = $('#tags').val("").trim();
+                },
+                error:function(resp){
+                  alert('error')
+                }
+              })
           }
       },false)
     </script>
