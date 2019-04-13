@@ -7,6 +7,7 @@
     <title>PERSONAL_BLOG_INDEX_PAGE</title>
     <link rel="stylesheet" href="./css/base.css">
     <link rel="stylesheet" href="./css/index.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
 <body>
     <header  class="header">
@@ -16,7 +17,7 @@
                 <li><a href="#">home</a></li>
                 <li><a href="sitemap.html">map</a></li>
                 <li><a href="about.html">about</a></li>
-                <li><a href="#">forum</a></li>
+                <li><a href="guestbook.html">forum</a></li>
             </ul>
             <div class="search_bar">
                 <input type="text" placeholder="search by key worlds">
@@ -26,125 +27,46 @@
     </header>
     <div class="content">
             <div class="content_left">
-                    <div class="every_day">
+                    <div class="every_day" id="every_day">
                         <span>A DAY SENTENCE</span>
-                        <p>a day sentence  content</p>
+                        <p v-html="getContent"></p>
                         <p>...........  content</p>
                     </div>
-                    <div class="article_list">
-                        <div class="article">
-                            <a href="" class="article_title">
-                             title   
+                    <div class="article_list" id="article_list">
+                        <div class="article" v-for="item in articleList">
+                            <a :href="item.link"  class="article_title">
+                             {{item.title}}   
                             </a>
                             <p class="article_content">
-                                content
+                                {{item.content}}   
                             </p>
                             <div class="article_foot">
-                                foot                               
-                            </div>
-                        </div>
-                        <div class="article">
-                            <a href="" class="article_title">
-                             title   
-                            </a>
-                            <p class="article_content">
-                                content
-                            </p>
-                            <div class="article_foot">
-                                foot                               
-                            </div>
-                        </div>
-                        <div class="article">
-                            <a href="" class="article_title">
-                             title   
-                            </a>
-                            <p class="article_content">
-                                content
-                            </p>
-                            <div class="article_foot">
-                                foot                               
-                            </div>
-                        </div>
-                        <div class="article">
-                            <a href="" class="article_title">
-                             title   
-                            </a>
-                            <p class="article_content">
-                                content
-                            </p>
-                            <div class="article_foot">
-                                foot                               
+                                {{item.date}}   {{item.views}}  {{item.tags}}     {{item.id}}                   
                             </div>
                         </div>
                     </div>
             </div>
             <div class="content_right">
-                <div class="right_module">
+                <div class="right_module" id="random_tags">
                     <div>random tags</div>
-                    <a href="">asd</a>
-                    <a href="">asd</a>
-                    <a href="">asd</a>
-                    <a href="">asd</a>
-                    <a href="">asd</a>
-                    <a href="">asd</a>
-                    <a href="">asd</a>
+                    <a href="" v-for="tag in tags" :style="{color:randomColor(),fontSize:randomSize()}">{{tag}}</a>  
                 </div>
-                <div class="right_module">
+                <div class="right_module" id="new_hot">
                     <div>currently hot</div>
                     <ul>
-                        <li><a href="">rencently hot news</a></li>
-                        <li><a href="">rencently hot news</a></li>
-                        <li><a href="">rencently hot news</a></li>
-                        <li><a href="">rencently hot news</a></li>
-                        <li><a href="">rencently hot news</a></li>
+                        <li v-for="tl in titleList"><a :href="tl.link">{{tl.title}}</a></li>
                     </ul>
                 </div>
-                <div class="right_module">
+                <div class="right_module" id="new_comments" >
                     <div>currently comments</div>
                     <ul>
-                            <li>
+                            <li v-for="cm in  commentList" >
                                 <div>
-                                    <span>username</span>
-                                    <span  class="pull_right">time</span>
+                                    <span>{{cm.user}}</span>
+                                    <span  class="pull_right">{{cm.data}}</span>
                                 </div>
                                 <p>
-                                    comments here
-                                </p>
-                            </li>
-                            <li>
-                                <div>
-                                    <span>username</span>
-                                    <span  class="pull_right">time</span>
-                                </div>
-                                <p>
-                                    comments here
-                                </p>
-                            </li>
-                            <li>
-                                <div>
-                                    <span>username</span>
-                                    <span  class="pull_right">time</span>
-                                </div>
-                                <p>
-                                    comments here
-                                </p>
-                            </li>
-                            <li>
-                                <div>
-                                    <span>username</span>
-                                    <span  class="pull_right">time</span>
-                                </div>
-                                <p>
-                                    comments here
-                                </p>
-                            </li>
-                            <li>
-                                <div>
-                                    <span>username</span>
-                                    <span  class="pull_right">time</span>
-                                </div>
-                                <p>
-                                    comments here
+                                    {{cm.content}}
                                 </p>
                             </li>
                     </ul>
@@ -154,7 +76,6 @@
                 <div class="right_module">
                         <div>friends links</div>
                         <span><a href="">iTman</a></span>   <span><a href="">iTman</a></span>
-                     
                         <span><a href="">iTman</a></span>
                         <span><a href="">iTman</a></span>
                         <span><a href="">iTman</a></span>
@@ -181,5 +102,7 @@
         </ul>
         <p>create by @dylan</p>
     </footer>
+    <script src="./js/index.js"></script>
+    <script src="./js/base.js"></script>
 </body>
 </html>
