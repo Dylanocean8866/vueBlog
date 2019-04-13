@@ -24,7 +24,18 @@
               var title = $('#title').val();
               var tags = $('#tags').val();
 
-              console.log(title,content,tags)
+              $.ajax({
+                url:"/edit_every_day",
+                method:"post",
+                data:content.trim(),
+                success:function(resp){
+                  alert(JSON.parse(resp).msg)
+                  var content = $('#editor').html("");
+                },
+                error:function(resp){
+                  alert('error')
+                }
+              })
           }
       },false)
     </script>

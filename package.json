@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Dylanocean8866/vueBlog#readme",
   "dependencies": {
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "mysql": "^2.16.0"
   }
 }
