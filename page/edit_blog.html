@@ -20,22 +20,20 @@
     <script>
       addEventListener('DOMContentLoaded',()=>{
           sub.onclick = ()=>{
-              var content = $('#editor').html();
-              var title = $('#title').val();
-              var tags = $('#tags').val();
+              var content = $('#editor').html().trim();
+              var title = $('#title').val().trim();
+              var tags = $('#tags').val().trim();
               $.ajax({
-                url:"/edit_article",
+                url:"/edit_article?title="+title+"&tags="+tags,
                 method:"post",
                 data:{
                   content,
-                  title,
-                  tags
                 },
                 success:function(resp){
                   alert(JSON.parse(resp).msg)
-                  var content = $('#editor').html("").trim();
-                  var content = $('#title').val("").trim();
-                  var content = $('#tags').val("").trim();
+                  var content = $('#editor').html("");
+                  var content = $('#title').val("");
+                  var content = $('#tags').val("");
                 },
                 error:function(resp){
                   alert('error')

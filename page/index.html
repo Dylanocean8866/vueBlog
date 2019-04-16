@@ -40,12 +40,20 @@
                             <a :href="item.link"  class="article_title">
                              {{item.title}}   
                             </a>
-                            <p class="article_content">
-                                {{item.content}}   
+                            <p class="article_content" v-html="item.content">
+                                <!-- {{item.content}}    -->
                             </p>
+                            <!-- <p class="article_content">
+                                    {{item.content}}   
+                            </p> -->
                             <div class="article_foot">
                                 {{item.date}}   {{item.views}}  {{item.tags}}     {{item.id}}                   
                             </div>
+                        </div>
+                        <div class="page_tool">
+                            <ul>
+                                <li v-for="pageNum in generateTool" v-on:click="jumpTo(pageNum.page)" v-bind:class="{now_page:(pageNum.text == page)}">{{pageNum.text}}</li>
+                            </ul>
                         </div>
                     </div>
             </div>
