@@ -43,6 +43,21 @@ function queryBlogCountDao(success){
     })
 }
 
+function getArtByIdDao(id,success){
+    var con = dbUtil.createConnection();
+    con.connect();
+    var sql ="select * from blog where id = ?";
+    var param = [id];
+    con.query(sql,param,(error,request)=>{
+        if(error == null){
+            success(request);
+        }else{
+            console.log(error)
+        }
+    })
+}
+
+module.exports.getArtByIdDao = getArtByIdDao;
 module.exports.queryBlogCountDao = queryBlogCountDao;
 module.exports.articleEditDao = articleEditDao;
 module.exports.getAllArticleDao = getAllArticleDao;

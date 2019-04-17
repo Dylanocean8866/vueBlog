@@ -7,6 +7,8 @@
     <title>ABOUT</title>
     <link rel="stylesheet" href="./css/base.css">
     <link rel="stylesheet" href="./css/about.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body>
     <header  class="header">
@@ -46,118 +48,68 @@
                     <p>about blog</p>
                     <p>about blog</p>
                 </div>
-                <div class="blog_comments">
-                        <span  class="blog_comment_msg">about "title" has 6 comment</span>
-                        <div class="blog_comment">
-                            <span>
-                                <b>user</b>:write at 2018-06-26 12:35 reply
-                            </span>
-                            <div>who reply</div>
+                    <div class="blog_comments" id="blog_comments" >
+                            <span  class="blog_comment_msg">this article has {{count}} comment</span>
+                            <div class="blog_comment" v-for="item in commentsList">
+                                <span>
+                                    <b>{{item.info}}</b>:write at {{item.ctime}} <a style="cursor:pointer" v-on:click="reply(item.id)" >[reply]</a>
+                                </span>
+                                <div>{{item.comments}}</div>
+                            </div>
+                    </div>
+    
+                    <div class="send_comment" id="send_comment">
+                        <span>send comment</span>
+                        <div>
+                            <input type="hidden" id="comment_reply" value="-1">
+                            <input type="text"  placeholder="name" id="comment_name">
+                            <input type="text"  placeholder="email:you will recive via email by reply" id="comment_email">
                         </div>
-                        <div class="blog_comment">
-                            <span>
-                                <b>user</b>:write at 2018-06-26 12:35 reply
-                            </span>
-                            <div>who reply</div>
+                        <div>
+                            <textarea placeholder="will not reply if nonsense" name="comment_content" id="comment_content" ></textarea>
                         </div>
-                        <div class="blog_comment">
-                            <span>
-                                <b>user</b>:write at 2018-06-26 12:35 reply
-                            </span>
-                            <div>who reply</div>
+                        <div>
+                            <input type="text" placeholder="code"  id="comment_code">
+                            <span v-on:click="getNewCode()"  v-html="vCode" class="codeBox"></span>
                         </div>
-                        <div class="blog_comment">
-                            <span>
-                                <b>user</b>:write at 2018-06-26 12:35 reply
-                            </span>
-                            <div>who reply</div>
-                        </div>
-                </div>
-            </div>
-            <div class="content_right">
-                <div class="right_module">
-                    <div>random tags</div>
-                    <a href="">asd</a>
-                    <a href="">asd</a>
-                    <a href="">asd</a>
-                    <a href="">asd</a>
-                    <a href="">asd</a>
-                    <a href="">asd</a>
-                    <a href="">asd</a>
-                </div>
-                <div class="right_module">
-                    <div>currently hot</div>
-                    <ul>
-                        <li><a href="">rencently hot news</a></li>
-                        <li><a href="">rencently hot news</a></li>
-                        <li><a href="">rencently hot news</a></li>
-                        <li><a href="">rencently hot news</a></li>
-                        <li><a href="">rencently hot news</a></li>
-                    </ul>
-                </div>
-                <div class="right_module">
-                    <div>currently comments</div>
-                    <ul>
-                            <li>
-                                <div>
-                                    <span>username</span>
-                                    <span  class="pull_right">time</span>
-                                </div>
-                                <p>
-                                    comments here
-                                </p>
-                            </li>
-                            <li>
-                                <div>
-                                    <span>username</span>
-                                    <span  class="pull_right">time</span>
-                                </div>
-                                <p>
-                                    comments here
-                                </p>
-                            </li>
-                            <li>
-                                <div>
-                                    <span>username</span>
-                                    <span  class="pull_right">time</span>
-                                </div>
-                                <p>
-                                    comments here
-                                </p>
-                            </li>
-                            <li>
-                                <div>
-                                    <span>username</span>
-                                    <span  class="pull_right">time</span>
-                                </div>
-                                <p>
-                                    comments here
-                                </p>
-                            </li>
-                            <li>
-                                <div>
-                                    <span>username</span>
-                                    <span  class="pull_right">time</span>
-                                </div>
-                                <p>
-                                    comments here
-                                </p>
-                            </li>
-                    </ul>
-                </div>
-
-                
-                <div class="right_module">
-                        <div>friends links</div>
-                        <span><a href="">iTman</a></span>   <span><a href="">iTman</a></span>
-                     
-                        <span><a href="">iTman</a></span>
-                        <span><a href="">iTman</a></span>
-                        <span><a href="">iTman</a></span>
-                        <span><a href="">iTman</a></span>
-                        <span><a href="">iTman</a></span>
+                        <button v-on:click="sendComment()">submit</button>
                     </div>
             </div>
+            <div class="content_right">
+                    <div class="right_module" id="random_tags">
+                        <div>random tags</div>
+                        <a href="" v-for="tag in tags" :style="{color:randomColor(),fontSize:randomSize()}">{{tag}}</a>  
+                    </div>
+                    <div class="right_module" id="new_hot">
+                        <div>currently hot</div>
+                        <ul>
+                            <li v-for="tl in titleList"><a :href="tl.link">{{tl.title}}</a></li>
+                        </ul>
+                    </div>
+                    <div class="right_module" id="new_comments" >
+                        <div>currently comments</div>
+                        <ul>
+                                <li v-for="cm in  commentList" >
+                                    <div>
+                                        <span>{{cm.user}}</span>
+                                        <span  class="pull_right">{{cm.data}}</span>
+                                    </div>
+                                    <p>
+                                        {{cm.content}}
+                                    </p>
+                                </li>
+                        </ul>
+                    </div>
+                    <div class="right_module">
+                            <div>friends links</div>
+                            <span><a href="">iTman</a></span>   <span><a href="">iTman</a></span>
+                            <span><a href="">iTman</a></span>
+                            <span><a href="">iTman</a></span>
+                            <span><a href="">iTman</a></span>
+                            <span><a href="">iTman</a></span>
+                            <span><a href="">iTman</a></span>
+                        </div>
+                </div>
     </div>
     <footer class="footer">
         <ul>
@@ -177,5 +129,7 @@
         </ul>
         <p>create by @dylan</p>
     </footer>
+    <script src="./js/about.js"></script>
+    <script src="./js/base.js"></script>
 </body>
 </html>

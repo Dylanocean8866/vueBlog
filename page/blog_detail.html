@@ -4,11 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>GUESTBOOK</title>
+    <title>PERSONAL_BLOG_INDEX_PAGE</title>
     <link rel="stylesheet" href="./css/base.css">
-    <link rel="stylesheet" href="./css/guestbook.css">
+    <link rel="stylesheet" href="./css/blog_detail.css">
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    
 </head>
 <body>
     <header  class="header">
@@ -28,10 +30,10 @@
     </header>
     <div class="content">
             <div class="content_left">
-                <div class="description">
-                    <p>description</p>
-                    <p style="color:red;">description</p>
-                    <p>description</p>
+                <div class="blog" id="blog_detail">
+                    <div class="blog_title">{{title}}</div>
+                    <div class="blog_msg">作者:Dylan 标签:{{tags}} 发布于：{{ctime}} 浏览：{{views}}</div>
+                    <div class="blog_content" v-html="content"></div>
                 </div>
                 <div class="blog_comments" id="blog_comments" >
                         <span  class="blog_comment_msg">this article has {{count}} comment</span>
@@ -61,40 +63,40 @@
                 </div>
             </div>
             <div class="content_right">
-                    <div class="right_module" id="random_tags">
-                        <div>random tags</div>
-                        <a href="" v-for="tag in tags" :style="{color:randomColor(),fontSize:randomSize()}">{{tag}}</a>  
-                    </div>
-                    <div class="right_module" id="new_hot">
-                        <div>currently hot</div>
-                        <ul>
-                            <li v-for="tl in titleList"><a :href="tl.link">{{tl.title}}</a></li>
-                        </ul>
-                    </div>
-                    <div class="right_module" id="new_comments" >
-                        <div>currently comments</div>
-                        <ul>
-                                <li v-for="cm in  commentList" >
-                                    <div>
-                                        <span>{{cm.user}}</span>
-                                        <span  class="pull_right">{{cm.data}}</span>
-                                    </div>
-                                    <p>
-                                        {{cm.content}}
-                                    </p>
-                                </li>
-                        </ul>
-                    </div>
-                    <div class="right_module">
-                            <div>friends links</div>
-                            <span><a href="">iTman</a></span>   <span><a href="">iTman</a></span>
-                            <span><a href="">iTman</a></span>
-                            <span><a href="">iTman</a></span>
-                            <span><a href="">iTman</a></span>
-                            <span><a href="">iTman</a></span>
-                            <span><a href="">iTman</a></span>
-                        </div>
+                <div class="right_module" id="random_tags">
+                    <div>random tags</div>
+                    <a href="" v-for="tag in tags" :style="{color:randomColor(),fontSize:randomSize()}">{{tag}}</a>  
                 </div>
+                <div class="right_module" id="new_hot">
+                    <div>currently hot</div>
+                    <ul>
+                        <li v-for="tl in titleList"><a :href="tl.link">{{tl.title}}</a></li>
+                    </ul>
+                </div>
+                <div class="right_module" id="new_comments" >
+                    <div>currently comments</div>
+                    <ul>
+                            <li v-for="cm in  commentList" >
+                                <div>
+                                    <span>{{cm.user}}</span>
+                                    <span  class="pull_right">{{cm.data}}</span>
+                                </div>
+                                <p>
+                                    {{cm.content}}
+                                </p>
+                            </li>
+                    </ul>
+                </div>
+                <div class="right_module">
+                        <div>friends links</div>
+                        <span><a href="">iTman</a></span>   <span><a href="">iTman</a></span>
+                        <span><a href="">iTman</a></span>
+                        <span><a href="">iTman</a></span>
+                        <span><a href="">iTman</a></span>
+                        <span><a href="">iTman</a></span>
+                        <span><a href="">iTman</a></span>
+                    </div>
+            </div>
     </div>
     <footer class="footer">
         <ul>
@@ -114,7 +116,8 @@
         </ul>
         <p>create by @dylan</p>
     </footer>
-    <script src="./js/gust_book.js"></script>
+    <script src="./js/blog_detail.js"></script>
     <script src="./js/base.js"></script>
+
 </body>
 </html>

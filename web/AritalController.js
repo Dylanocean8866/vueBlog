@@ -77,6 +77,16 @@ function queryBlogCount(req,res){
 }
 
 
+function getArtById(req,res){
+    var param  = url.parse(req.url,true).query;
+    articleDao.getArtByIdDao(param.id,(data)=>{
+        res.writeHead(200);
+        res.write(respUtil.writeResult('success','ok',data));
+        res.end();
+    })
+}
+
+path.set('/getArtById',getArtById);
 path.set('/queryBlogCount',queryBlogCount);
 path.set('/queryAllArticle',queryAllArticle);
 path.set('/edit_article',articleEdit);

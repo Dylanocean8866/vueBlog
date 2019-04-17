@@ -231,3 +231,37 @@ body{
     background:#333!important;
     color:#fff!important;
 }
+
+
+.blog_comments{
+    width:100%;
+}
+
+.blog_comment_msg{
+    margin-top:30px;
+    padding:10px;
+    display: inline-block;
+    width:100%;
+    text-align: left;
+}
+.blog_comment{
+    width:95%;
+    background:#d9edf7;
+    border:1px dashed #7ca4c1;
+    padding:10px 10px 20px 10px;
+    margin-top:10px;
+    color:#31708f;
+    text-align: left;
+}
+.blog_comment span{
+    display: inline-block;
+    width:100%;
+    padding-left:10px;
+}
+
+.blog_comment div{
+    display: inline-block;
+    width:100%;
+    padding-left:10px;
+    margin-top:10px;
+}

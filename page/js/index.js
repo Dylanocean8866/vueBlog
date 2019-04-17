@@ -70,6 +70,7 @@ var alist = new Vue({
                 var tempList = {};
                 for(var i = 0; i <resultData.length;i++){
                     resultData[i].content = resultData[i].content.replace(/<img [\w\W]*>/g,'').substring(0,300);
+                    resultData[i].link = '/blog_detail.html?id='+resultData[i].id;
                 }
                 self.articleList = resultData;
             }).catch((err)=>{
