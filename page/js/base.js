@@ -2,29 +2,30 @@ var randomTags = new Vue({
     el:"#random_tags",
     data:{
         tags:[
-            'javascript',
-            'html',
-            'css',
-            'vue',
-            'react',
-            'jquery',
-            'bootstrap',
-            'less',
-            'sass',
-            'es6',
-            'webpack',
-            'gulp',
-            'common.js',
-            'require.js',
-            'sea.js',
-            'node.js',
-            'express',
-            'redis',
-            'mongon',
-            'mysql',
-            'sqlserver',
-            'c#',
-            'java','php']
+            // 'javascript',
+            // 'html',
+            // 'css',
+            // 'vue',
+            // 'react',
+            // 'jquery',
+            // 'bootstrap',
+            // 'less',
+            // 'sass',
+            // 'es6',
+            // 'webpack',
+            // 'gulp',
+            // 'common.js',
+            // 'require.js',
+            // 'sea.js',
+            // 'node.js',
+            // 'express',
+            // 'redis',
+            // 'mongon',
+            // 'mysql',
+            // 'sqlserver',
+            // 'c#',
+            // 'java','php'
+        ]
     },
     computed:{
         randomColor(){
@@ -40,10 +41,24 @@ var randomTags = new Vue({
                var size = Math.floor(Math.random() * 13) + 15;
                return size+"px"
             }
+        },
+        gotoLink(){
+            return function(tag){
+                location = "http://127.0.0.1:12306/index.html" + tag
+            }
         }
     },
     created(){
-       
+       axios({
+           method:"get",
+           url:'/getAllTag'
+       }).then((data)=>{
+            var resultData = data.data.data;
+            for(var i = 0; i <resultData.length;i++){
+                resultData[i].link = '?tag='+resultData[i].tag;
+            }
+            this.tags = resultData
+       })
     }
 })
 
@@ -68,6 +83,18 @@ var newHot = new Vue({
                 link:"####"
             },
         ]
+    },
+    created(){
+        axios({
+            method:"get",
+            url:'/getHotNews'
+        }).then((data)=>{
+            var resultData = data.data.data;
+            for(var i = 0; i <resultData.length;i++){
+                resultData[i].link = '/blog_detail.html?id='+resultData[i].id;
+            }
+            this.titleList = resultData
+        })
     }
 })
 
@@ -96,5 +123,17 @@ var newComments = new Vue({
                 data:'ctime'
             },
         ]
+    },
+    created(){
+        axios({
+            method:"get",
+            url:'/getCurrentlyComments'
+        }).then((data)=>{
+            var tempList = data.data.data;
+            for(var i = 0; i < tempList.length; i++){
+                tempList[i].ctime =  new Date(parseInt(tempList[i].ctime) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ');
+            }
+            this.commentList = tempList
+        })
     }
 })

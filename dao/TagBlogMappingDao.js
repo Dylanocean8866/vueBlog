@@ -14,4 +14,21 @@ function insertTagBlogMapping(tagId,blogId,ctime,utime,success){
     con.end();
 }
 
+
+function getBlogIdListByTagIdFromBlogMappingDao(tagId,success){
+    var con = dbUtil.createConnection();
+    con.connect();
+    var sql = 'select blog_id from tag_blog_mapping where tag_id = ?';
+    var param = [tagId]
+    con.query(sql,param,(error,request)=>{
+        if(error == null){
+            success(request);
+        }else{
+            console.log(error);
+        }
+    })
+    con.end();
+}
+
+module.exports.getBlogIdListByTagIdFromBlogMappingDao = getBlogIdListByTagIdFromBlogMappingDao;
 module.exports.insertTagBlogMapping = insertTagBlogMapping;

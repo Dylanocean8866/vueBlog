@@ -13,7 +13,7 @@ function  articleEdit(req,res){
         var verbInfo = url.parse(req.url,true).query;
 
         var arg = querystring.parse(data.toString());
-        console.log(verbInfo)
+        // console.log(verbInfo)
         articleDao.articleEditDao(arg.content,verbInfo.title,verbInfo.tags,tUtil.getNow(),tUtil.getNow(),(data)=>{
             if(data.affectedRows == 1){
                 res.writeHead(200);
@@ -35,10 +35,11 @@ function  articleEdit(req,res){
 
 function queryTag(tag,blogId){
     tagDao.queryTag(tag,(data)=>{
+        console.log(data);
         if(data == null || data.length ==0){
             insertTag(tag,blogId);
         }else{
-            insertTagBlogMapping(data.insertId,blogId)
+            insertTagBlogMapping(data[0].id,blogId)
         }
     })
 }
@@ -51,7 +52,7 @@ function insertTag(tag,blogId){
 
 function insertTagBlogMapping(tagId,blogId){
     tagBlogMapping.insertTagBlogMapping(tagId,blogId,tUtil.getNow(),tUtil.getNow(),(data)=>{
-            console.log(data);
+            // console.log(data);
     })
 }
 
@@ -83,9 +84,61 @@ function getArtById(req,res){
         res.writeHead(200);
         res.write(respUtil.writeResult('success','ok',data));
         res.end();
+        articleDao.addViewsByBlogDao(param.id,(data)=>{
+            // console.log(data)
+        })
     })
 }
 
+
+function queryAllBlog(req,res){
+    articleDao.queryAllBlogDao((data)=>{
+        res.writeHead(200);
+        res.write(respUtil.writeResult('success','ok',data));
+        res.end();
+    }) 
+}
+
+
+function getHotNews(req,res){
+    articleDao.getHotNewsDao((data)=>{
+        res.writeHead(200);
+        res.write(respUtil.writeResult('success','ok',data));
+        res.end();
+    }) 
+}
+
+function queryBlogByTag(req,res){
+    var urlInfo = url.parse(req.url,true).query;
+    tagDao.getTagIdByTagNameDao(urlInfo.tag,(data)=>{
+       var tagId = data[0].id;
+       tagBlogMapping.getBlogIdListByTagIdFromBlogMappingDao(tagId,(result)=>{
+            var tempData = []
+            for(var i = 0; i < result.length; i++){
+                articleDao.getArtByIdDao(result[i].blog_id,(data)=>{
+                    tempData.push(data[0])
+                })
+            }
+            getResult(tempData,result.length,res);
+       });
+    })
+}
+
+function getResult(blogList ,len,res){
+    if(blogList.length <len){
+        setTimeout(function(){
+            getResult(blogList,len,res);
+        },10)
+    }else{
+        res.writeHead(200);
+        res.write(respUtil.writeResult('success','ok',blogList));
+        res.end();
+    }
+}
+
+path.set('/queryBlogByTag',queryBlogByTag);
+path.set('/getHotNews',getHotNews);
+path.set('/queryAllBlog',queryAllBlog);
 path.set('/getArtById',getArtById);
 path.set('/queryBlogCount',queryBlogCount);
 path.set('/queryAllArticle',queryAllArticle);

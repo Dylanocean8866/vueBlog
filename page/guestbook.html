@@ -11,21 +11,21 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body>
-    <header  class="header">
-        <div class="container">
-            <a href="#" class="title">my personal blog | teac blog</a>
-            <ul class="menu">
-                <li><a href="#">home</a></li>
-                <li><a href="sitemap.html">map</a></li>
-                <li><a href="about.html">about</a></li>
-                <li><a href="guestbook.html">forum</a></li>
-            </ul>
-            <div class="search_bar">
-                <input type="text" placeholder="search by key worlds">
-                <button>search</button>
-            </div>
-        </div>
-    </header>
+        <header  class="header">
+                <div class="container">
+                    <a href="/" class="title">my personal blog | teac blog</a>
+                    <ul class="menu">
+                        <li><a href="/">home</a></li>
+                        <li><a href="sitemap.html">map</a></li>
+                        <li><a href="about.html">about</a></li>
+                        <li><a href="guestbook.html">forum</a></li>
+                    </ul>
+                    <div class="search_bar">
+                        <input type="text" placeholder="search by key worlds">
+                        <button>search</button>
+                    </div>
+                </div>
+            </header>
     <div class="content">
             <div class="content_left">
                 <div class="description">
@@ -63,7 +63,7 @@
             <div class="content_right">
                     <div class="right_module" id="random_tags">
                         <div>random tags</div>
-                        <a href="" v-for="tag in tags" :style="{color:randomColor(),fontSize:randomSize()}">{{tag}}</a>  
+                        <a   v-on:click="gotoLink(tag.link)"  v-for="tag in tags" :style="{color:randomColor(),fontSize:randomSize()}">{{tag.tag}}</a>  
                     </div>
                     <div class="right_module" id="new_hot">
                         <div>currently hot</div>
@@ -72,19 +72,19 @@
                         </ul>
                     </div>
                     <div class="right_module" id="new_comments" >
-                        <div>currently comments</div>
-                        <ul>
-                                <li v-for="cm in  commentList" >
-                                    <div>
-                                        <span>{{cm.user}}</span>
-                                        <span  class="pull_right">{{cm.data}}</span>
-                                    </div>
-                                    <p>
-                                        {{cm.content}}
-                                    </p>
-                                </li>
-                        </ul>
-                    </div>
+                            <div>currently comments</div>
+                            <ul>
+                                    <li v-for="cm in  commentList" >
+                                        <div>
+                                            <span>{{cm.user_name}}</span>
+                                            <span  class="pull_right">{{cm.ctime}}</span>
+                                        </div>
+                                        <p>
+                                            {{cm.comments}}
+                                        </p>
+                                    </li>
+                            </ul>
+                        </div>
                     <div class="right_module">
                             <div>friends links</div>
                             <span><a href="">iTman</a></span>   <span><a href="">iTman</a></span>

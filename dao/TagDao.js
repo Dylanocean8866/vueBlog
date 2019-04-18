@@ -31,5 +31,37 @@ function queryTag(tag,success){
 }
 
 
+function getAllTagDao(success){
+    var con = dbUtil.createConnection();
+    con.connect();
+    var sql ="select tag from tag";
+    con.query(sql,(error,request)=>{
+        if(error == null){
+            success(request);
+        }else{
+            console.log(error)
+        }
+    })
+    con.end();
+}
+
+
+function getTagIdByTagNameDao(tagName,success){
+    var con = dbUtil.createConnection();
+    con.connect();
+    var sql = "select id from tag where tag = ?";
+    var param =[tagName] 
+    con.query(sql,param,(error,request)=>{
+        if(error == null){
+            success(request);
+        }else{
+            console.log(error)
+        }
+    })
+    con.end();
+}
+
+module.exports.getTagIdByTagNameDao = getTagIdByTagNameDao;
+module.exports.getAllTagDao = getAllTagDao;
 module.exports.insertTag = insertTag;
 module.exports.queryTag = queryTag;

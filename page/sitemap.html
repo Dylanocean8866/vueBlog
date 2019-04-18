@@ -6,21 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link rel="stylesheet" href="./css/sitemap.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body>
     <div class="title">sitemap</div>
     <div class="link"> <a href="/" ><b>home</b></a>>>sitemap</div>    
-    <div class="blog_list" >
+    <div class="blog_list" id="blog_list">
         <span>article_list</span>
         <ul>
-            <li><a href="">article_title</a></li>
-            <li><a href="">article_title</a></li>
-            <li><a href="">article_title</a></li>
-            <li><a href="">article_title</a></li>
-            <li><a href="">article_title</a></li>
-            <li><a href="">article_title</a></li>
-            <li><a href="">article_title</a></li>
+            <li v-for="item in allBLog"><a :href="item.link">{{item.title}}</a></li>
         </ul>
     </div>
+    <script src="./js/siteMap.js"></script>
 </body>
 </html>

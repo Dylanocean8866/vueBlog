@@ -15,7 +15,11 @@ app.get('/queryRandomCode',loader.get('/queryRandomCode'));
 app.get('/getAllComment',loader.get('/getAllComment'));
 app.get('/getCommentCount',loader.get('/getCommentCount'));
 app.get('/getParentName',loader.get('/getParentName'));
-
+app.get('/queryAllBlog',loader.get('/queryAllBlog'));
+app.get('/getAllTag',loader.get('/getAllTag'));
+app.get('/getHotNews',loader.get('/getHotNews'));
+app.get('/getCurrentlyComments',loader.get('/getCurrentlyComments'));
+app.get('/queryBlogByTag',loader.get('/queryBlogByTag'));
 app.listen(gc.port,function(){
     console.log('server is running at 12306')
 })

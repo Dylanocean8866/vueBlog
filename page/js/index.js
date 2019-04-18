@@ -61,6 +61,34 @@ var alist = new Vue({
            this.loadArticle(num)
         },
         loadArticle:function(num){
+            var param = location.search;
+            var tempArr = param.split('?tag=');
+            var tag = decodeURIComponent(tempArr[1]);
+            if(param!=""){
+                this.loadAllArticleByTag(tag,num);
+            }else{
+                this.loadAllArticle(num);
+            }
+        },
+        loadAllArticleByTag(tagName,num){
+            var self =  this;
+            axios({
+                method:'get',
+                url:'/queryBlogByTag?tag='+tagName+'&pageIndex='+(num - 1)*self.size +'&size='+self.size,
+            }).then((data)=>{
+                var resultData = data.data.data;
+                var tempList = {};
+                for(var i = 0; i <resultData.length;i++){
+                    resultData[i].content = resultData[i].content.replace(/<img [\w\W]*>/g,'').substring(0,300);
+                    resultData[i].link = '/blog_detail.html?id='+resultData[i].id;
+                }
+                self.count = resultData.length;
+                self.articleList = resultData;
+            }).catch((err)=>{
+                console.log(err);
+            })
+        },
+        loadAllArticle(num){
             var self =  this;
             axios({
                 method:'get',
@@ -76,6 +104,7 @@ var alist = new Vue({
             }).catch((err)=>{
                 console.log(err);
             })
+            this.getTotalCount();
         },
         getTotalCount:function(){
             var self = this;
@@ -89,6 +118,5 @@ var alist = new Vue({
     },
     created:function(){
        this.loadArticle(1);
-       this.getTotalCount();
     }
 })

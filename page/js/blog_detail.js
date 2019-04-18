@@ -134,7 +134,7 @@ var bComments = new Vue({
                         method:"get",
                         url:'/getAllComment?bid='+ tempArr[1],
                     }).then((data)=>{
-                       this.getParentName(data.data.data)
+                    //    this.getParentName(data.data.data)
                        var tempList = data.data.data;
                        for(var i = 0; i < tempList.length; i++){
                            if(tempList[i].parent != -1){

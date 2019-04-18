@@ -71,6 +71,24 @@ function getParentNameDao(rid,success){
     con.end();
 }
 
+
+
+function getCurrentlyCommentsDao(success){
+    var con = dbUtil.createConnection();
+    con.connect();
+    var sql ="select * from my_blog.comments order by ctime desc limit 0,5";
+    con.query(sql,(error,request)=>{
+        if(error == null){
+            success(request);
+        }else{
+            console.log(error)
+        }
+    })
+    con.end();
+}
+
+
+module.exports.getCurrentlyCommentsDao = getCurrentlyCommentsDao;
 module.exports.getParentNameDao = getParentNameDao;
 module.exports.getCommentCountByBidDao = getCommentCountByBidDao;
 module.exports.getAllCommentDao = getAllCommentDao;

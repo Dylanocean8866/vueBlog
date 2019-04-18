@@ -58,6 +58,19 @@ function  getParentName(req,res){
     })
 }
 
+function  getCurrentlyComments(req,res){
+    commentDao.getCurrentlyCommentsDao((data)=>{
+        if(data){
+            res.writeHead(200);
+            res.write(respUtil.writeResult('success','ok',data));
+            res.end();
+        }
+    })
+}
+
+
+
+path.set('/getCurrentlyComments',getCurrentlyComments);
 path.set('/getParentName',getParentName);
 path.set('/getCommentCount',getCommentCount);
 path.set('/getAllComment',getAllComment);
