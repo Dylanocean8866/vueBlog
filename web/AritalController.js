@@ -108,6 +108,18 @@ function getHotNews(req,res){
     }) 
 }
 
+function searchByKeyWord(req,res){
+    var param  = url.parse(req.url,true).query;
+    articleDao.searchByKeyWordDao(param.pageIndex,param.size,param.key,(data)=>{
+        res.writeHead(200);
+        res.write(respUtil.writeResult('success','ok',data));
+        res.end();
+    }) 
+}
+
+
+
+
 function queryBlogByTag(req,res){
     var urlInfo = url.parse(req.url,true).query;
     tagDao.getTagIdByTagNameDao(urlInfo.tag,(data)=>{
@@ -136,6 +148,7 @@ function getResult(blogList ,len,res){
     }
 }
 
+path.set('/searchByKeyWord',searchByKeyWord);
 path.set('/queryBlogByTag',queryBlogByTag);
 path.set('/getHotNews',getHotNews);
 path.set('/queryAllBlog',queryAllBlog);

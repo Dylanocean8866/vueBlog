@@ -9,8 +9,6 @@
     <link rel="stylesheet" href="./css/index.css">
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
-    
 </head>
 <body>
     <header  class="header">
@@ -22,9 +20,9 @@
                 <li><a href="about.html">about</a></li>
                 <li><a href="guestbook.html">forum</a></li>
             </ul>
-            <div class="search_bar">
-                <input type="text" placeholder="search by key worlds">
-                <button>search</button>
+            <div class="search_bar"  id="search_bar">
+                <input type="text" id="wordInput" placeholder="search by key worlds">
+                <button v-on:click="searchByWord()">search</button>
             </div>
         </div>
     </header>

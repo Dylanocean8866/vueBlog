@@ -137,3 +137,22 @@ var newComments = new Vue({
         })
     }
 })
+
+
+var search = new Vue({
+    el:"#search_bar",
+    data:{
+     
+    },
+    computed:{
+        searchByWord(){
+            return function(){
+                var keyWord =  document.getElementById("wordInput").value;
+                location = "http://127.0.0.1:12306/index.html?key=" + keyWord
+            }
+        }
+    },
+    created(){
+
+    }
+})

@@ -1,3 +1,4 @@
+
 var everyDay = new Vue({
     el:"#every_day",
     data:{
@@ -62,13 +63,34 @@ var alist = new Vue({
         },
         loadArticle:function(num){
             var param = location.search;
-            var tempArr = param.split('?tag=');
-            var tag = decodeURIComponent(tempArr[1]);
-            if(param!=""){
-                this.loadAllArticleByTag(tag,num);
+            console.log(param.split('='))
+            var tempSearch = param.split('=');
+            var param = decodeURIComponent(tempSearch[1]);
+            if(tempSearch[0] =="?key"){
+                this.loadBySearchKeyWord(param,num);
+            }else if(tempSearch[0] =="?tag"){
+                this.loadAllArticleByTag(param,num);
             }else{
                 this.loadAllArticle(num);
             }
+        },
+        loadBySearchKeyWord(word,num){
+            var self =  this;
+            axios({
+                method:'get',
+                url:'/searchByKeyWord?key='+word+'&pageIndex='+(num - 1)*self.size +'&size='+self.size,
+            }).then((data)=>{
+                var resultData = data.data.data;
+                var tempList = {};
+                for(var i = 0; i <resultData.length;i++){
+                    resultData[i].content = resultData[i].content.replace(/<img [\w\W]*>/g,'').substring(0,300);
+                    resultData[i].link = '/blog_detail.html?id='+resultData[i].id;
+                }
+                self.count = resultData.length;
+                self.articleList = resultData;
+            }).catch((err)=>{
+                console.log(err);
+            })
         },
         loadAllArticleByTag(tagName,num){
             var self =  this;

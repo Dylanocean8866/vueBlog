@@ -120,6 +120,23 @@ function getHotNewsDao(success){
     con.end();
 }
 
+function searchByKeyWordDao(pageIndex,size,keyword,success){
+    var con = dbUtil.createConnection();
+    con.connect();
+    var sql ="SELECT * FROM my_blog.blog where content like '\%"+ keyword +"%'  limit "+pageIndex+","+size+"";
+    con.query(sql,(error,request)=>{
+        if(error == null){
+            success(request);
+        }else{
+            console.log(error)
+        }
+    })
+    con.end();
+}
+
+
+
+module.exports.searchByKeyWordDao = searchByKeyWordDao;
 module.exports.queryBlogByTagDao = queryBlogByTagDao;
 module.exports.getHotNewsDao = getHotNewsDao;
 module.exports.queryAllBlogDao = queryAllBlogDao;

@@ -20,6 +20,10 @@ app.get('/getAllTag',loader.get('/getAllTag'));
 app.get('/getHotNews',loader.get('/getHotNews'));
 app.get('/getCurrentlyComments',loader.get('/getCurrentlyComments'));
 app.get('/queryBlogByTag',loader.get('/queryBlogByTag'));
+app.get('/searchByKeyWord',loader.get('/searchByKeyWord'));
+
+
+
 app.listen(gc.port,function(){
     console.log('server is running at 12306')
 })
